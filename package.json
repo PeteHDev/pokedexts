@@ -1,0 +1,27 @@
+{
+  "name": "pokedexts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "node dist/main.js",
+    "dev": "npx tsc && node dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PeteHDev/pokedexts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PeteHDev/pokedexts/issues"
+  },
+  "homepage": "https://github.com/PeteHDev/pokedexts#readme",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.15.29",
+    "typescript": "^5.8.3"
+  },
+  "type":"module"
+}
