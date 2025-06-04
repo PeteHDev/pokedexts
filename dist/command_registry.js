@@ -1,5 +1,6 @@
 import { commandExit } from "./command_exit.js";
 import { commandHelp } from "./command_help.js";
+import { commandMapForward, commandMapBack } from "./command_map.js";
 export function getCommands() {
     return {
         help: {
@@ -11,6 +12,16 @@ export function getCommands() {
             name: "exit",
             description: "Exits the pokedex",
             callback: commandExit,
+        },
+        map: {
+            name: "map",
+            description: "Displays next 20 location areas",
+            callback: commandMapForward,
+        },
+        mapb: {
+            name: "mapb",
+            description: "Displays previous 20 location areas",
+            callback: commandMapBack,
         },
     };
 }

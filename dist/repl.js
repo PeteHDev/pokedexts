@@ -8,10 +8,10 @@ export function cleanInput(input) {
     const words = lowered.split(" ");
     return words;
 }
-export function startREPL(state) {
+export async function startREPL(state) {
     state.readline.prompt();
     const commands = getCommands();
-    state.readline.on("line", (input) => {
+    state.readline.on("line", async (input) => {
         const inputWords = cleanInput(input);
         if (inputWords.length === 0) {
             state.readline.prompt();
@@ -24,10 +24,10 @@ export function startREPL(state) {
             return;
         }
         try {
-            cmd.callback(state);
+            await cmd.callback(state);
         }
         catch (e) {
-            console.log(e);
+            console.log(e.message);
         }
         state.readline.prompt();
     });
