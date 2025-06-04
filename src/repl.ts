@@ -1,6 +1,5 @@
-import { createInterface } from "node:readline";
 import { getCommands } from "./command_registry.js";
-import { CLICommand, State} from "./state.js";
+import { State} from "./state.js";
 
 export function cleanInput(input: string): string[] {
     const noPadding: string = input.trim();
