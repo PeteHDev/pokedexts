@@ -1,4 +1,5 @@
 import { createInterface } from "node:readline";
+import { getCommands } from "./command_registry.js";
 export function cleanInput(input) {
     const noPadding = input.trim();
     const noLongSpaces = noPadding.replace(/\s+/g, " ");
@@ -15,13 +16,19 @@ export function startREPL() {
         prompt: "Pokedex > ",
     });
     rl.prompt();
+    const commands = getCommands();
     rl.on("line", (input) => {
         const inputWords = cleanInput(input);
         if (inputWords.length === 0) {
             rl.prompt();
             return;
         }
-        console.log(`Your command was: ${inputWords[0]}`);
+        if (commands[inputWords[0]]) {
+            commands[inputWords[0]].callback(commands);
+        }
+        else {
+            console.log("Unknown command");
+        }
         rl.prompt();
     });
 }

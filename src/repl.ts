@@ -1,4 +1,5 @@
 import { createInterface } from "node:readline";
+import { CLICommand, getCommands } from "./command_registry.js";
 
 export function cleanInput(input: string): string[] {
     const noPadding: string = input.trim();
@@ -20,14 +21,19 @@ export function startREPL(): void {
     });
 
     rl.prompt();
-    
+    const commands = getCommands();
+
     rl.on("line", (input: string) => {
         const inputWords = cleanInput(input);
         if (inputWords.length === 0) {
             rl.prompt();
             return;
         }
-        console.log(`Your command was: ${inputWords[0]}`);
+        if (commands[inputWords[0]]) {
+            commands[inputWords[0]].callback(commands);
+        } else {
+            console.log("Unknown command");
+        }
         rl.prompt();
     });
 }
