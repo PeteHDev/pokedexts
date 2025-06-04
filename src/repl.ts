@@ -29,11 +29,18 @@ export function startREPL(): void {
             rl.prompt();
             return;
         }
-        if (commands[inputWords[0]]) {
-            commands[inputWords[0]].callback(commands);
-        } else {
-            console.log("Unknown command");
+
+        const cmd = commands[inputWords[0]];
+        if (!cmd) {
+            console.log("Unknown command. Type 'help' for a list of commands.");
+        } 
+
+        try {
+            cmd.callback(commands);
+        } catch (e) {
+            console.log(e);
         }
+
         rl.prompt();
     });
 }

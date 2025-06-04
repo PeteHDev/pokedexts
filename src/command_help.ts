@@ -1,8 +1,9 @@
 import { CLICommand } from "./command_registry.js";
 
 export function commandHelp(commands: Record<string, CLICommand>) {
-    console.log("Welcome to the Pokedex!\nUsage:\n\n");
-    for (const [key, command] of Object.entries(commands)) {
+    console.log("\nWelcome to the Pokedex!\nUsage:\n\n");
+    for (const command of Object.values(commands)) {
         console.log(`${command.name}: ${command.description}`)
     }
+    console.log()
 }
