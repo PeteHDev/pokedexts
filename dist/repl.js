@@ -1,27 +1,21 @@
 import { createInterface } from "node:readline";
-
-export function cleanInput(input: string): string[] {
-    const noPadding: string = input.trim();
-    const noLongSpaces: string = noPadding.replace(/\s+/g, " ");
-    const lowered: string = noLongSpaces.toLowerCase();
-
-    if (lowered.length === 0) return [];
-    
-    const words: string[] = lowered.split(" ");
-
+export function cleanInput(input) {
+    const noPadding = input.trim();
+    const noLongSpaces = noPadding.replace(/\s+/g, " ");
+    const lowered = noLongSpaces.toLowerCase();
+    if (lowered.length === 0)
+        return [];
+    const words = lowered.split(" ");
     return words;
 }
-
-export function startREPL(): void {
+export function startREPL() {
     const rl = createInterface({
         input: process.stdin,
         output: process.stdout,
         prompt: "Pokedex > ",
     });
-
     rl.prompt();
-    
-    rl.on("line", (input: string) => {
+    rl.on("line", (input) => {
         const inputWords = cleanInput(input);
         if (inputWords.length === 0) {
             rl.prompt();
