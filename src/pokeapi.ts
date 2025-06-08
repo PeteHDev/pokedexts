@@ -95,6 +95,8 @@ export interface PokemonDetailed {
   name: string
   order: number
   weight: number
+  stats: Stat[]
+  types: Type[]
 }
 
 export interface Ability {
@@ -104,6 +106,27 @@ export interface Ability {
 }
 
 export interface Ability2 {
+  name: string
+  url: string
+}
+
+export interface Stat {
+  base_stat: number
+  effort: number
+  stat: Stat2
+}
+
+export interface Stat2 {
+  name: string
+  url: string
+}
+
+export interface Type {
+  slot: number
+  type: Type2
+}
+
+export interface Type2 {
   name: string
   url: string
 }

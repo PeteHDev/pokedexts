@@ -1,6 +1,6 @@
 import { State } from "./state.js";
 
-const maxBaseExperience = 608;
+const maxBaseExperience = 610;
 
 export async function commandCatch(state: State, pokemonName: string) {
     const pokemon = await state.pokeApi.fetchPokemon(pokemonName);

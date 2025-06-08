@@ -1,4 +1,4 @@
-const maxBaseExperience = 608;
+const maxBaseExperience = 610;
 export async function commandCatch(state, pokemonName) {
     const pokemon = await state.pokeApi.fetchPokemon(pokemonName);
     console.log(`Throwing a Pokeball at ${pokemonName}...`);
