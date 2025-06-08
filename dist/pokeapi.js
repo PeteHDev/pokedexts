@@ -1,14 +1,20 @@
+import { Cache } from "./pokecache.js";
 export class PokeApi {
     static baseURL = "https://pokeapi.co/api/v2";
+    #cache = new Cache(10000);
     constructor() { }
     async fetchLocations(pageURL) {
         const url = pageURL || `${PokeApi.baseURL}/location-area`;
+        if (this.#cache.get(url)) {
+            return this.#cache.get(url);
+        }
         try {
             const resp = await fetch(url);
             if (!resp.ok) {
                 throw new Error(`${resp.status} ${resp.statusText}`);
             }
             const locations = await resp.json();
+            this.#cache.add(url, locations);
             return locations;
         }
         catch (e) {
