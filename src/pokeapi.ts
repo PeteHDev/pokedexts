@@ -51,6 +51,30 @@ export class PokeApi {
             );
         }
     }
+
+    async fetchPokemon(pokemonName: string): Promise<PokemonDetailed> {
+        const pokemonURL = PokeApi.baseURL + "/pokemon/" + pokemonName;
+
+        if (this.#cache.get(pokemonURL)) {
+          return this.#cache.get(pokemonURL);
+        }
+
+        try {
+            const resp = await fetch(pokemonURL);
+
+            if (!resp.ok) {
+                throw new Error(`${resp.status} ${resp.statusText}`);
+            }
+
+            const pokemon: PokemonDetailed = await resp.json();
+            this.#cache.add(pokemonURL, pokemon);
+            return pokemon;
+        } catch (e) {
+            throw new Error(
+                `Error fetching location '${pokemonName}': ${(e as Error).message}`,
+            );
+        }
+    }
 }
 
 export type ShallowLocations = {
@@ -61,6 +85,28 @@ export type ShallowLocations = {
         url: string;
     }[];
 };
+
+export interface PokemonDetailed {
+  abilities: Ability[]
+  base_experience: number
+  height: number
+  id: number
+  location_area_encounters: string
+  name: string
+  order: number
+  weight: number
+}
+
+export interface Ability {
+  ability: Ability2
+  is_hidden: boolean
+  slot: number
+}
+
+export interface Ability2 {
+  name: string
+  url: string
+}
 
 export interface Location {
   encounter_method_rates: EncounterMethodRate[]
