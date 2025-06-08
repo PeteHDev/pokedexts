@@ -24,7 +24,7 @@ export async function startREPL(state) {
             return;
         }
         try {
-            await cmd.callback(state);
+            await cmd.callback(state, ...inputWords.slice(1));
         }
         catch (e) {
             console.log(e.message);

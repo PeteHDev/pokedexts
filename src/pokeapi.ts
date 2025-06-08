@@ -29,7 +29,12 @@ export class PokeApi {
     }
 
     async fetchLocation(locationName: string): Promise<Location> {
-        const locationURL = PokeApi.baseURL + "/location/" + locationName;
+        const locationURL = PokeApi.baseURL + "/location-area/" + locationName;
+
+        if (this.#cache.get(locationURL)) {
+          return this.#cache.get(locationURL);
+        }
+
         try {
             const resp = await fetch(locationURL);
 
@@ -38,6 +43,7 @@ export class PokeApi {
             }
 
             const location: Location = await resp.json();
+            this.#cache.add(locationURL, location);
             return location;
         } catch (e) {
             throw new Error(
@@ -57,40 +63,80 @@ export type ShallowLocations = {
 };
 
 export interface Location {
-  areas: Area[]
-  game_indices: Index[]
+  encounter_method_rates: EncounterMethodRate[]
+  game_index: number
   id: number
+  location: Location
   name: string
   names: Name[]
-  region: Region
+  pokemon_encounters: PokemonEncounter[]
 }
 
-interface Area {
+export interface EncounterMethodRate {
+  encounter_method: EncounterMethod
+  version_details: VersionDetail[]
+}
+
+export interface EncounterMethod {
   name: string
   url: string
 }
 
-interface Index {
-  game_index: number
-  generation: Generation
+export interface VersionDetail {
+  rate: number
+  version: Version
 }
 
-interface Generation {
+export interface Version {
   name: string
   url: string
 }
 
-interface Name {
+export interface Location {
+  name: string
+  url: string
+}
+
+export interface Name {
   language: Language
   name: string
 }
 
-interface Language {
+export interface Language {
   name: string
   url: string
 }
 
-interface Region {
+export interface PokemonEncounter {
+  pokemon: Pokemon
+  version_details: VersionDetail2[]
+}
+
+export interface Pokemon {
+  name: string
+  url: string
+}
+
+export interface VersionDetail2 {
+  encounter_details: EncounterDetail[]
+  max_chance: number
+  version: Version2
+}
+
+export interface EncounterDetail {
+  chance: number
+  condition_values: any[]
+  max_level: number
+  method: Method
+  min_level: number
+}
+
+export interface Method {
+  name: string
+  url: string
+}
+
+export interface Version2 {
   name: string
   url: string
 }

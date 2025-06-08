@@ -32,7 +32,7 @@ export async function startREPL(state: State): Promise<void> {
         } 
 
         try {
-            await cmd.callback(state);
+            await cmd.callback(state, ...inputWords.slice(1));
         } catch (e) {
             console.log((e as Error).message);
         }

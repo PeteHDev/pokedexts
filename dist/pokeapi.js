@@ -22,13 +22,17 @@ export class PokeApi {
         }
     }
     async fetchLocation(locationName) {
-        const locationURL = PokeApi.baseURL + "/location/" + locationName;
+        const locationURL = PokeApi.baseURL + "/location-area/" + locationName;
+        if (this.#cache.get(locationURL)) {
+            return this.#cache.get(locationURL);
+        }
         try {
             const resp = await fetch(locationURL);
             if (!resp.ok) {
                 throw new Error(`${resp.status} ${resp.statusText}`);
             }
             const location = await resp.json();
+            this.#cache.add(locationURL, location);
             return location;
         }
         catch (e) {
